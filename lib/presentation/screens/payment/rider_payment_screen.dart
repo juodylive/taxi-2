@@ -17,7 +17,7 @@ import '../../cubits/realtime/get_ride_request_status_cubit.dart';
 import '../../cubits/realtime/ride_request_cubit.dart';
 import '../../cubits/realtime/update_ride_request_parameter.dart';
 import '../../widgets/review_widget.dart';
-import '../Home/item_home_screen.dart';
+import '../home/item_home_screen.dart';
 
 class RiderPaymentScreen extends StatefulWidget {
   final String? bookingId, rideId, fare, paymentUrl;
