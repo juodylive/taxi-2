@@ -13,10 +13,10 @@ import '../cubits/book_ride_cubit.dart';
 import '../cubits/logout_cubit.dart';
 import '../cubits/profile/edit_profile_cubit.dart';
 import '../cubits/realtime/update_ride_request_parameter.dart';
-import '../screens/Account/profile_screen.dart';
-import '../screens/Account/setting_screen.dart';
-import '../screens/Account/static_screen.dart';
-import '../screens/Auth/login_screen.dart';
+import '../screens/account/profile_screen.dart';
+import '../screens/account/setting_screen.dart';
+import '../screens/account/static_screen.dart';
+import '../screens/auth/login_screen.dart';
 import '../screens/history/history_screen.dart';
 
 class MyDrawer extends StatefulWidget {
