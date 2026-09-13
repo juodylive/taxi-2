@@ -19,8 +19,8 @@ import '../../cubits/book_ride_cubit.dart';
 import '../../cubits/profile/edit_profile_cubit.dart';
 import '../../cubits/realtime/update_ride_request_parameter.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../Auth/email_update_screen.dart';
-import '../Auth/phone_update_screen.dart';
+import '../auth/email_update_screen.dart';
+import '../auth/phone_update_screen.dart';
 
 class EditProfile extends StatefulWidget {
   const EditProfile({super.key});
