@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ride_on/core/utils/translate.dart';
 import '../../core/utils/theme/project_color.dart';
 import '../../core/utils/theme/theme_style.dart';
-import '../screens/Search/search_map_screen.dart';
+import '../screens/search/search_map_screen.dart';
 
 Widget selectWithLocation({BuildContext? context}) {
   return PopupMenuButton<int>(
