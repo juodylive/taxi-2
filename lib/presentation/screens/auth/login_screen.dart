@@ -15,7 +15,7 @@ import '../../cubits/auth/google_login_cubit.dart';
 import '../../cubits/auth/login_cubit.dart';
 import '../../cubits/auth/user_authenticate_cubit.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../Home/item_home_screen.dart';
+import '../home/item_home_screen.dart';
 import 'google_update_screen.dart';
 import 'otp_screen.dart';
 
