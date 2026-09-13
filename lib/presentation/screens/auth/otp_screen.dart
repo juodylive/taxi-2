@@ -14,7 +14,7 @@ import '../../cubits/auth/otp_verify_cubit.dart';
 import '../../cubits/auth/resend_otp_cubit.dart';
 import '../../cubits/auth/user_authenticate_cubit.dart';
 import '../../widgets/custom_text_form_field.dart';
-import '../Home/item_home_screen.dart';
+import '../home/item_home_screen.dart';
 
 class OtpScreen extends StatefulWidget {
   final String? number;
