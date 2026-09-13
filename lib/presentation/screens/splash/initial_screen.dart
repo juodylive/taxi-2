@@ -6,14 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_on/presentation/screens/Splash/splash_screen.dart';
+import 'package:ride_on/presentation/screens/splash/splash_screen.dart';
 import '../../../core/utils/theme/project_color.dart';
 import '../../cubits/book_ride_cubit.dart';
 import '../../cubits/realtime/check_ride_request_cubit.dart';
 import '../../cubits/realtime/ride_request_cubit.dart';
-import '../Home/item_home_screen.dart';
-import '../Onboarding/on_boarding_screen.dart';
-import '../Search/send_ride_request_screen.dart';
+import '../home/item_home_screen.dart';
+import '../onboarding/on_boarding_screen.dart';
+import '../search/send_ride_request_screen.dart';
 import '../payment/rider_payment_screen.dart';
 
 class InitialScreen extends StatefulWidget {
