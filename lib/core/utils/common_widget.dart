@@ -21,7 +21,7 @@ import 'package:ride_on/core/utils/translate.dart';
 
 import '../../presentation/cubits/localizations_cubit.dart';
 import '../../presentation/cubits/profile/delete_account_cubit.dart';
-import '../../presentation/screens/Auth/login_screen.dart';
+import '../../presentation/screens/auth/login_screen.dart';
 
 Widget commonlyUserLogo() {
   return Image.asset(
