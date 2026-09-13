@@ -10,9 +10,9 @@ import '../../../core/utils/theme/project_color.dart';
 import '../../../core/utils/theme/theme_style.dart';
 import '../../cubits/auth/apple_login_cubit.dart';
 import '../../cubits/auth/google_login_cubit.dart';
-import '../Auth/google_update_screen.dart';
-import '../Auth/signup_screen.dart';
-import '../Home/item_home_screen.dart';
+import '../auth/google_update_screen.dart';
+import '../auth/signup_screen.dart';
+import '../home/item_home_screen.dart';
 
 class Onboardingscreen extends StatefulWidget {
   const Onboardingscreen({super.key});
