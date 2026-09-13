@@ -29,7 +29,7 @@ import '../../cubits/realtime/get_ride_request_status_cubit.dart';
 import '../../cubits/realtime/ride_request_cubit.dart';
 import '../../cubits/vehicle_data/get_vehicle_cetgegory_cubit.dart';
 import '../../widgets/sos_widget.dart';
-import '../Home/item_home_screen.dart';
+import '../home/item_home_screen.dart';
 import '../payment/rider_payment_screen.dart';
 
 class SendRideRequestScreen extends StatefulWidget {
