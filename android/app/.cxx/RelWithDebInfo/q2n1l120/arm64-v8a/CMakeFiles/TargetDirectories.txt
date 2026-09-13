@@ -1,0 +1,2 @@
+/Users/gadgetzone/Documents/Mehkaar/ride_on-app/android/app/.cxx/RelWithDebInfo/q2n1l120/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/gadgetzone/Documents/Mehkaar/ride_on-app/android/app/.cxx/RelWithDebInfo/q2n1l120/arm64-v8a/CMakeFiles/rebuild_cache.dir

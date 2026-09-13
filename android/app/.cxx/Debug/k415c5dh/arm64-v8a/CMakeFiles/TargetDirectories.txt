@@ -1,0 +1,2 @@
+/Users/gadgetzone/Documents/Mehkaar/sizhIT/ride_on_user-app/android/app/.cxx/Debug/k415c5dh/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/gadgetzone/Documents/Mehkaar/sizhIT/ride_on_user-app/android/app/.cxx/Debug/k415c5dh/arm64-v8a/CMakeFiles/rebuild_cache.dir

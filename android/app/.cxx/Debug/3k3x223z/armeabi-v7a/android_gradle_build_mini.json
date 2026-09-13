@@ -1,0 +1,20 @@
+{
+  "buildFiles": [
+    "/Users/gadgetzone/development/flutter/packages/flutter_tools/gradle/src/main/groovy/CMakeLists.txt"
+  ],
+  "cleanCommandsComponents": [
+    [
+      "/Users/gadgetzone/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+      "-C",
+      "/Users/gadgetzone/Documents/ride_on-app/android/app/.cxx/Debug/3k3x223z/armeabi-v7a",
+      "clean"
+    ]
+  ],
+  "buildTargetsCommandComponents": [
+    "/Users/gadgetzone/Library/Android/sdk/cmake/3.22.1/bin/ninja",
+    "-C",
+    "/Users/gadgetzone/Documents/ride_on-app/android/app/.cxx/Debug/3k3x223z/armeabi-v7a",
+    "{LIST_OF_TARGETS_TO_BUILD}"
+  ],
+  "libraries": {}
+}

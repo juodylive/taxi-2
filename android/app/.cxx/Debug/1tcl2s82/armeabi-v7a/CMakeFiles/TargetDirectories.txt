@@ -1,0 +1,2 @@
+/Users/allansizh/Documents/amar/ride_on-app/android/app/.cxx/Debug/1tcl2s82/armeabi-v7a/CMakeFiles/edit_cache.dir
+/Users/allansizh/Documents/amar/ride_on-app/android/app/.cxx/Debug/1tcl2s82/armeabi-v7a/CMakeFiles/rebuild_cache.dir
