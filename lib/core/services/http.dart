@@ -6,7 +6,7 @@ import 'package:flutter/material.dart' show BuildContext   ;
  import 'package:http/http.dart' as http;
 import '../../app/route_settings.dart';
 import '../../presentation/cubits/logout_cubit.dart';
-import '../../presentation/screens/Auth/login_screen.dart';
+import '../../presentation/screens/auth/login_screen.dart';
 import '../utils/common_widget.dart';
 import 'config.dart';
 import 'data_store.dart';
