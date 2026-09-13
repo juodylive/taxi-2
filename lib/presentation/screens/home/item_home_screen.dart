@@ -20,8 +20,8 @@ import '../../cubits/location/user_current_location_cubit.dart';
 import '../../cubits/profile/edit_profile_cubit.dart';
 import '../../cubits/realtime/update_ride_request_parameter.dart';
 import '../../cubits/vehicle_data/get_vehicle_cetgegory_cubit.dart';
-import '../Search/loading_nearby_search_screen.dart';
-import '../Search/route_location_screen.dart';
+import '../search/loading_nearby_search_screen.dart';
+import '../search/route_location_screen.dart';
 
 
 class ItemHomeScreen extends StatefulWidget {
