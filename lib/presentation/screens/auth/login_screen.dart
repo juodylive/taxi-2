@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:ride_on/core/utils/translate.dart';
-import 'package:ride_on/presentation/screens/Auth/signup_screen.dart';
+import 'package:ride_on/presentation/screens/auth/signup_screen.dart';
 import 'package:ride_on/presentation/screens/onboarding/language_select_screen.dart';
 import '../../../core/extensions/workspace.dart';
 import '../../../core/utils/common_widget.dart';
