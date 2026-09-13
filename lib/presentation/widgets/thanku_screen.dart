@@ -7,7 +7,7 @@ import 'package:ride_on/presentation/widgets/review_widget.dart';
 import '../../core/utils/common_widget.dart';
 import '../../core/utils/theme/project_color.dart';
 import '../../core/utils/theme/theme_style.dart';
-import '../screens/Home/item_home_screen.dart';
+import '../screens/home/item_home_screen.dart';
 
 class ThankuScreen extends StatefulWidget {
   final int rating;
