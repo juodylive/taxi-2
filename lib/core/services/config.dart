@@ -5,7 +5,7 @@ static const googleKey = "YOUR_GOOGLE_MAPS_API_KEY_HERE";
 
 
 // Temporary base domain URL for setup (please add your final URL here)
- static const String baseDomain = 'https://rideon.unibooker.app';
+ static const String baseDomain = 'https://zearah.dpdns.org';
   // Do not change any code below this line. ==================================================
   static const String version = '/api/v1/';
   static const String bearerVersion = '/api/';
