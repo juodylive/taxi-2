@@ -17,7 +17,7 @@
 
 	<!-- ✅ App display name on home screen -->
 	<key>CFBundleDisplayName</key>
-	<string>RideOn-Taxi</string>
+	<string>Zearah Rider</string>
 
 	<!-- ✅ Executable file -->
 	<key>CFBundleExecutable</key>
@@ -33,7 +33,7 @@
 
 	<!-- ✅ App name -->
 	<key>CFBundleName</key>
-	<string>RideOn-Taxi</string>
+	<string>Zearah Rider</string>
 
 	<!-- ✅ App type (always APPL for iOS apps) -->
 	<key>CFBundlePackageType</key>

@@ -31,7 +31,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    namespace = "com.sizh.rideon.rider.taxiapp"
+    namespace = "com.zearah.rider"
     compileSdkVersion 36
     ndkVersion '26.1.10909125'
 
@@ -50,7 +50,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.sizh.rideon.rider.taxiapp"
+        applicationId = "com.zearah.rider"
         minSdkVersion 23
         targetSdkVersion 36
         versionCode flutterVersionCode.toInteger()

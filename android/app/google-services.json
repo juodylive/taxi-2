@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:688750971224:android:65097ee054f090958bfd2d",
         "android_client_info": {
-          "package_name": "com.sizh.rideon.rider.taxiapp"
+          "package_name": "com.zearah.rider"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "688750971224-pfehh7gu8pffd2kkb800m22rbk14vrd5.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.sizh.rideon.rider.taxiapp",
+            "package_name": "com.zearah.rider",
             "certificate_hash": "11bbbe077ebc49cc5c933a997a0e9294761c969c"
           }
         },
@@ -43,7 +43,7 @@
               "client_id": "688750971224-fuv3o15s1h61p0d9ajrgvg177k07nd0j.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.sizh.rideon.rider.taxiapp"
+                "bundle_id": "com.zearah.rider"
               }
             }
           ]

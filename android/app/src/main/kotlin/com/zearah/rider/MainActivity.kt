@@ -1,4 +1,4 @@
-package com.sizh.rideon.rider.taxiapp
+package com.zearah.rider
 
 import io.flutter.embedding.android.FlutterActivity
 
