@@ -6,10 +6,24 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 
 import '../../../core/utils/common_widget.dart';
 
+
+class AppMarker {
+  final String markerId;
+  final LatLng position;
+  final String title;
+  final Uint8List icon;
+
+  AppMarker({
+    required this.markerId,
+    required this.position,
+    required this.title,
+    required this.icon,
+  });
+}
 
 abstract class MarkerState extends Equatable {
   @override
@@ -19,7 +33,7 @@ abstract class MarkerState extends Equatable {
 class MarkerInitial extends MarkerState {}
 
 class MarkerUpdated extends MarkerState {
-  final Set<Marker> markers;
+  final Set<AppMarker> markers;
 
   MarkerUpdated({required this.markers});
 
@@ -30,23 +44,20 @@ class MarkerUpdated extends MarkerState {
 class MarkerCubit extends Cubit<MarkerState> {
   MarkerCubit() : super(MarkerInitial());
 
-  final Set<Marker> _markers = {};
+  final Set<AppMarker> _markers = {};
 
   void addOrUpdateMarker(LatLng position, String title, String markerId,
       String image, int size) async {
     final Uint8List markerIcon = await getBytesFromAsset(image, size);
 
-    Marker marker = Marker(
-      markerId: MarkerId(markerId),
+    AppMarker marker = AppMarker(
+      markerId: markerId,
       position: position,
-      draggable: false,
-      zIndex: 2,
-      flat: true,
-      infoWindow: InfoWindow(title: title),
-      icon: BitmapDescriptor.fromBytes(markerIcon),
+      title: title,
+      icon: markerIcon,
     );
 
-    _markers.removeWhere((m) => m.markerId.value == markerId);
+    _markers.removeWhere((m) => m.markerId == markerId);
     _markers.add(marker);
 
     emit(MarkerUpdated(markers: _markers));
@@ -149,7 +160,7 @@ abstract class UserMarkerState extends Equatable {
 class UserMarkerInitial extends UserMarkerState {}
 
 class UserMarkerUpdated extends UserMarkerState {
-  final Set<Marker> markers;
+  final Set<AppMarker> markers;
 
   UserMarkerUpdated({required this.markers});
 
@@ -162,7 +173,7 @@ class UserMarkerUpdated extends UserMarkerState {
 class UserMarkerCubit extends Cubit<UserMarkerState> {
   UserMarkerCubit() : super(UserMarkerInitial());
 
-  final Set<Marker> _markers = {};
+  final Set<AppMarker> _markers = {};
 
   Future<void> addOrUpdateMarker(
     LatLng position,
@@ -178,20 +189,20 @@ class UserMarkerCubit extends Cubit<UserMarkerState> {
     } else {
       markerIcon = await getBytesFromAsset(iconPath, size);
     }
-    _markers.removeWhere((marker) => marker.markerId.value == markerId);
+    _markers.removeWhere((marker) => marker.markerId == markerId);
     _markers.add(
-      Marker(
-        markerId: MarkerId(markerId),
+      AppMarker(
+        markerId: markerId,
         position: position,
-        infoWindow: InfoWindow(title: title),
-        icon: BitmapDescriptor.fromBytes(markerIcon),
+        title: title,
+        icon: markerIcon,
       ),
     );
     emit(UserMarkerUpdated(markers: _markers));
   }
 
   void removeMarker(String markerId) {
-    _markers.removeWhere((marker) => marker.markerId.value == markerId);
+    _markers.removeWhere((marker) => marker.markerId == markerId);
     emit(UserMarkerUpdated(markers: _markers));
   }
 
