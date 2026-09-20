@@ -1,52 +1,45 @@
 {
   "project_info": {
-    "project_number": "688750971224",
-    "firebase_url": "https://rideon-1a627-default-rtdb.firebaseio.com",
-    "project_id": "rideon-1a627",
-    "storage_bucket": "rideon-1a627.firebasestorage.app"
+    "project_number": "383812583887",
+    "project_id": "taxi-32f59",
+    "storage_bucket": "taxi-32f59.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:688750971224:android:65097ee054f090958bfd2d",
+        "mobilesdk_app_id": "1:383812583887:android:c2e536276227c9144d52ba",
         "android_client_info": {
-          "package_name": "com.zearah.rider"
+          "package_name": "com.zearah.driver"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "688750971224-pfehh7gu8pffd2kkb800m22rbk14vrd5.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.zearah.rider",
-            "certificate_hash": "11bbbe077ebc49cc5c933a997a0e9294761c969c"
-          }
-        },
-        {
-          "client_id": "688750971224-qsrfg5v75ssh3dp6kh1nrv739jija5uo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyC94QTYXcvsIKbcDgfF5h8Vivp6Ay89Xto"
+          "current_key": "AIzaSyDCXofdAtQTN5q7GoFr26yJp3iwksHzMHk"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "688750971224-qsrfg5v75ssh3dp6kh1nrv739jija5uo.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "688750971224-fuv3o15s1h61p0d9ajrgvg177k07nd0j.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.zearah.rider"
-              }
-            }
-          ]
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:383812583887:android:b34cc17b44ea2e224d52ba",
+        "android_client_info": {
+          "package_name": "com.zearah.rider"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDCXofdAtQTN5q7GoFr26yJp3iwksHzMHk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
         }
       }
     }
