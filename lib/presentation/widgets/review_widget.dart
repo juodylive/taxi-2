@@ -1,10 +1,10 @@
-import 'package:ride_on/app/route_settings.dart';
+import 'package:zearah_rider/app/route_settings.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:ride_on/core/utils/translate.dart';
-import 'package:ride_on/presentation/widgets/thanku_screen.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
+import 'package:zearah_rider/presentation/widgets/thanku_screen.dart';
 import '../../core/utils/common_widget.dart';
 import '../../core/utils/theme/project_color.dart';
 import '../../core/utils/theme/theme_style.dart';

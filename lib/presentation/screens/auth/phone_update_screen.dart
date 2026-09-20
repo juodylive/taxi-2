@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_on/core/utils/translate.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
 import '../../../app/route_settings.dart';
 import '../../../core/extensions/workspace.dart';
 import '../../../core/utils/common_widget.dart';

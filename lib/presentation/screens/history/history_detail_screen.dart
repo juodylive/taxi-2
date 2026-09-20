@@ -1,6 +1,6 @@
 import 'dart:convert';
-import 'package:ride_on/core/utils/translate.dart';
-import 'package:ride_on/domain/entities/history_data.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
+import 'package:zearah_rider/domain/entities/history_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
-import 'package:ride_on/core/utils/theme/project_color.dart';
+import 'package:zearah_rider/core/utils/theme/project_color.dart';
 
 //Dimensions //
 class Dimensions {

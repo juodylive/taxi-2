@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:ride_on/domain/entities/login_data.dart';
-import 'package:ride_on/data/repositories/auth_repository.dart';
+import 'package:zearah_rider/domain/entities/login_data.dart';
+import 'package:zearah_rider/data/repositories/auth_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../core/services/data_store.dart';

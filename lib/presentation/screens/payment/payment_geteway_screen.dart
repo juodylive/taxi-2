@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
-import 'package:ride_on/presentation/screens/payment/payment_success_page.dart';
+import 'package:zearah_rider/presentation/screens/payment/payment_success_page.dart';
 
 import '../../../core/utils/theme/project_color.dart';
 

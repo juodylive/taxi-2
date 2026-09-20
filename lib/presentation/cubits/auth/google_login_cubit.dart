@@ -2,17 +2,17 @@
 
 import 'dart:convert';
 
-import 'package:ride_on/core/extensions/helper/push_notifications.dart';
-import 'package:ride_on/domain/entities/login_data.dart';
-import 'package:ride_on/data/repositories/auth_repository.dart';
-import 'package:ride_on/core/services/data_store.dart';
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/extensions/helper/push_notifications.dart';
+import 'package:zearah_rider/domain/entities/login_data.dart';
+import 'package:zearah_rider/data/repositories/auth_repository.dart';
+import 'package:zearah_rider/core/services/data_store.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:ride_on/presentation/cubits/auth/user_authenticate_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/auth/user_authenticate_cubit.dart';
 
 import '../../../core/utils/common_widget.dart';
 import '../../../domain/entities/check_mobile.dart';

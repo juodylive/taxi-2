@@ -1,7 +1,7 @@
-import 'package:ride_on/core/services/http.dart';
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/services/http.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:flutter/material.dart';
-import 'package:ride_on/core/utils/translate.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
 
 import '../../core/services/config.dart';
 

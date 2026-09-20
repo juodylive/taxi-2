@@ -1,5 +1,5 @@
-import 'package:ride_on/domain/entities/history_data.dart';
-import 'package:ride_on/data/repositories/history_repository.dart';
+import 'package:zearah_rider/domain/entities/history_data.dart';
+import 'package:zearah_rider/data/repositories/history_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

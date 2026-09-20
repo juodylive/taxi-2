@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:flutter/material.dart' show BuildContext   ;
  // ignore: depend_on_referenced_packages
  import 'package:http/http.dart' as http;

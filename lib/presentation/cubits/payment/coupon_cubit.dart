@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ride_on/data/repositories/payment_repository.dart';
-import 'package:ride_on/domain/entities/get_item_price.dart';
+import 'package:zearah_rider/data/repositories/payment_repository.dart';
+import 'package:zearah_rider/domain/entities/get_item_price.dart';
 
 abstract class PaymentCouponState {}
 

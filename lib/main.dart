@@ -1,8 +1,8 @@
-import 'package:ride_on/app/app_localizations.dart';
-import 'package:ride_on/app/register_cubits.dart';
-import 'package:ride_on/presentation/cubits/localizations_cubit.dart';
-import 'package:ride_on/presentation/screens/splash/initial_screen.dart';
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/app/app_localizations.dart';
+import 'package:zearah_rider/app/register_cubits.dart';
+import 'package:zearah_rider/presentation/cubits/localizations_cubit.dart';
+import 'package:zearah_rider/presentation/screens/splash/initial_screen.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:bot_toast/bot_toast.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';

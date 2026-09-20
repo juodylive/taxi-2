@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_on/core/utils/translate.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
 
 import '../../../core/utils/common_widget.dart';
 import '../../../core/utils/theme/project_color.dart';

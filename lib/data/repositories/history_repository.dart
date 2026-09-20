@@ -1,4 +1,4 @@
-import 'package:ride_on/core/services/http.dart';
+import 'package:zearah_rider/core/services/http.dart';
 import 'package:flutter/material.dart';
 
 import '../../core/services/config.dart';

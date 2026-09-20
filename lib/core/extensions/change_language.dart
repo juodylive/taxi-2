@@ -1,9 +1,9 @@
-import 'package:ride_on/core/services/data_store.dart';
+import 'package:zearah_rider/core/services/data_store.dart';
 
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:ride_on/core/utils/translate.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
 
 import '../../presentation/cubits/localizations_cubit.dart';
 import '../utils/common_widget.dart';

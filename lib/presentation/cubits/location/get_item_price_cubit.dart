@@ -1,12 +1,12 @@
 // ignore_for_file: depend_on_referenced_packages
 
 import 'dart:convert';
-import 'package:ride_on/domain/entities/get_item_price.dart';
+import 'package:zearah_rider/domain/entities/get_item_price.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
-import 'package:ride_on/presentation/cubits/location/user_current_location_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/location/user_current_location_cubit.dart';
 
 import '../../../core/services/config.dart';
 import '../../../data/repositories/vehicle_repository.dart';

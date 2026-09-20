@@ -1,5 +1,5 @@
-import 'package:ride_on/core/utils/translate.dart';
-import 'package:ride_on/domain/entities/history_data.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
+import 'package:zearah_rider/domain/entities/history_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';

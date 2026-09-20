@@ -1,4 +1,4 @@
-import 'package:ride_on/core/services/data_store.dart';
+import 'package:zearah_rider/core/services/data_store.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 abstract class LanguageState {}

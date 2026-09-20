@@ -1,7 +1,7 @@
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:ride_on/core/utils/theme/theme_style.dart';
+import 'package:zearah_rider/core/utils/theme/theme_style.dart';
 import '../../../core/utils/common_widget.dart';
 
 class SplashScreen extends StatefulWidget {

@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:ride_on/core/utils/translate.dart';
-import 'package:ride_on/presentation/screens/search/send_ride_request_screen.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
+import 'package:zearah_rider/presentation/screens/search/send_ride_request_screen.dart';
 import '../../../core/services/data_store.dart';
 import '../../../core/utils/common_widget.dart';
 import '../../../core/utils/theme/project_color.dart';

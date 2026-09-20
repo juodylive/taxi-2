@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:ride_on/app/route_settings.dart';
-import 'package:ride_on/domain/entities/ride_request.dart';
+import 'package:zearah_rider/app/route_settings.dart';
+import 'package:zearah_rider/domain/entities/ride_request.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:ride_on/presentation/screens/splash/splash_screen.dart';
+import 'package:zearah_rider/presentation/screens/splash/splash_screen.dart';
 import '../../../core/utils/theme/project_color.dart';
 import '../../cubits/book_ride_cubit.dart';
 import '../../cubits/realtime/check_ride_request_cubit.dart';

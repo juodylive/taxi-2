@@ -1,4 +1,4 @@
-import 'package:ride_on/domain/entities/catrgory.dart';
+import 'package:zearah_rider/domain/entities/catrgory.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

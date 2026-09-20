@@ -1,6 +1,6 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:ride_on/core/services/data_store.dart';
+import 'package:zearah_rider/core/services/data_store.dart';
 import 'package:flutter/material.dart';
 
 Color themeColor = const Color(0xFFFFCA20);

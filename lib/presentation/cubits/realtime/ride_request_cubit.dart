@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:ride_on/core/services/data_store.dart';
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/services/data_store.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_database/firebase_database.dart';

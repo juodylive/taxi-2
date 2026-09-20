@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ride_on/core/utils/translate.dart';
+import 'package:zearah_rider/core/utils/translate.dart';
 import '../../core/utils/theme/project_color.dart';
 import '../../core/utils/theme/theme_style.dart';
 import '../screens/search/search_map_screen.dart';

@@ -1,4 +1,4 @@
-import 'package:ride_on/data/repositories/payment_repository.dart'
+import 'package:zearah_rider/data/repositories/payment_repository.dart'
     show PaymentRepository;
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';

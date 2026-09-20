@@ -1,4 +1,4 @@
-import 'package:ride_on/domain/entities/static_data.dart';
+import 'package:zearah_rider/domain/entities/static_data.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

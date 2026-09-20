@@ -1,15 +1,15 @@
-import 'package:ride_on/core/extensions/workspace.dart';
+import 'package:zearah_rider/core/extensions/workspace.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hive/hive.dart';
-import 'package:ride_on/presentation/cubits/payment/payment_cubit.dart';
-import 'package:ride_on/presentation/cubits/profile/edit_profile_cubit.dart';
-import 'package:ride_on/presentation/cubits/realtime/get_ride_request_status_cubit.dart';
-import 'package:ride_on/presentation/cubits/realtime/ride_request_cubit.dart';
-import 'package:ride_on/presentation/cubits/realtime/update_ride_request_parameter.dart';
-import 'package:ride_on/presentation/cubits/review/review_cubit.dart';
-import 'package:ride_on/presentation/cubits/vehicle_data/get_vehicle_cetgegory_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/payment/payment_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/profile/edit_profile_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/realtime/get_ride_request_status_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/realtime/ride_request_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/realtime/update_ride_request_parameter.dart';
+import 'package:zearah_rider/presentation/cubits/review/review_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/vehicle_data/get_vehicle_cetgegory_cubit.dart';
 
 import '../../core/utils/theme/project_color.dart';
 import 'auth/google_login_cubit.dart';

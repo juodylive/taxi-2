@@ -1,10 +1,10 @@
-import 'package:ride_on/data/repositories/auth_repository.dart';
-import 'package:ride_on/data/repositories/history_repository.dart';
+import 'package:zearah_rider/data/repositories/auth_repository.dart';
+import 'package:zearah_rider/data/repositories/history_repository.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/single_child_widget.dart';
-import 'package:ride_on/presentation/cubits/payment/coupon_cubit.dart';
-import 'package:ride_on/presentation/cubits/sos_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/payment/coupon_cubit.dart';
+import 'package:zearah_rider/presentation/cubits/sos_cubit.dart';
 
 import '../data/repositories/payment_repository.dart';
 import '../data/repositories/profile_repository.dart';
