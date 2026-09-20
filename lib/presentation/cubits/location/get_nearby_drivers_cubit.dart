@@ -9,15 +9,29 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:geoflutterfire_plus/geoflutterfire_plus.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 import 'dart:ui' as ui;
 import 'package:http/http.dart' as http;
 
 import '../../../core/extensions/workspace.dart';
-import '../../../core/services/config.dart';
 import '../general_cubit.dart';
+
+const String osrmBaseUrl = 'http://158.101.231.22:5000';
+
+class AppMarker {
+  final String markerId;
+  final LatLng position;
+  final String title;
+  final Uint8List icon;
+
+  AppMarker({
+    required this.markerId,
+    required this.position,
+    required this.title,
+    required this.icon,
+  });
+}
 
 abstract class DriverNearByState extends Equatable {
   @override
@@ -219,45 +233,47 @@ class DriverNearByCubit extends Cubit<DriverNearByState> {
         final driverChunks = chunkDrivers(nearestDrivers, 25);
 
 
-        final String destination = "$pickupLat,$pickupLng";
-
         final futures = driverChunks.map((chunk) async {
-          List<String> originCoords = chunk.map((driver) {
-            return "${driver['latitude']},${driver['longitude']}";
-          }).toList();
+          // Build OSRM /table coordinates: drivers first, destination last
+          final coordParts = <String>[];
+          for (final driver in chunk) {
+            coordParts.add("${driver['longitude']},${driver['latitude']}");
+          }
+          coordParts.add("$pickupLng,$pickupLat");
 
-          final String origins = originCoords.join('|');
+          final coordsStr = coordParts.join(';');
+          final destIndex = chunk.length;
+          final sourcesStr =
+              List.generate(chunk.length, (i) => i.toString()).join(';');
+
           final String url =
-              "https://maps.googleapis.com/maps/api/distancematrix/json"
-              "?origins=$origins"
-              "&destinations=$destination"
-              "&key=${Config.googleKey}";
-
-          final response = await http.get(Uri.parse(url));
-
+              "$osrmBaseUrl/table/v1/driving/$coordsStr?sources=$sourcesStr&destinations=$destIndex&annotations=distance";
 
           List<Map<String, dynamic>> filtered = [];
 
-          if (response.statusCode == 200) {
-            final data = jsonDecode(response.body);
-            final rows = data['rows'] as List;
+          try {
+            final response = await http.get(Uri.parse(url));
 
-            for (int i = 0; i < rows.length; i++) {
-              final element = rows[i]['elements'][0];
+            if (response.statusCode == 200) {
+              final data = jsonDecode(response.body);
+              if (data['code'] == 'Ok') {
+                final distances = data['distances'] as List;
 
-              if (element['status'] == "OK") {
-                final distanceMeters = element['distance']['value'];
-                final distanceKm = distanceMeters / 1000;
-
-
-
-                if (distanceKm <= distance) {
-                  filtered.add(chunk[i]);
+                for (int i = 0; i < distances.length; i++) {
+                  final distanceMeters = distances[i][0];
+                  if (distanceMeters != null) {
+                    final distanceKm = (distanceMeters as num) / 1000;
+                    if (distanceKm <= distance) {
+                      filtered.add(chunk[i]);
+                    }
+                  }
                 }
-              } else {
-
               }
             }
+          } catch (_) {
+            // If OSRM is unreachable, fall back to including the whole chunk
+            // (straight-line distance was already applied earlier).
+            filtered.addAll(chunk);
           }
 
           return filtered;
@@ -274,7 +290,7 @@ class DriverNearByCubit extends Cubit<DriverNearByState> {
             nearbyDrivers: finalFilteredDrivers, checkRestart: checkRestart));
 
         debugPrint(
-            "Filtered ${finalFilteredDrivers.length} drivers within $distance km route using Google API");
+            "Filtered ${finalFilteredDrivers.length} drivers within $distance km route using OSRM");
       } else {
         emit(DriverUpdated(nearbyDrivers: nearestDrivers, checkRestart: checkRestart));
         debugPrint(
@@ -303,7 +319,7 @@ abstract class DriverMapState extends Equatable {
 class DriverMapInitial extends DriverMapState {}
 
 class DriverMapLoading extends DriverMapState {
-  final Set<Marker> markers;
+  final Set<AppMarker> markers;
   DriverMapLoading(this.markers);
 
   @override
@@ -311,7 +327,7 @@ class DriverMapLoading extends DriverMapState {
 }
 
 class DriverMapUpdated extends DriverMapState {
-  final Set<Marker> markers;
+  final Set<AppMarker> markers;
   DriverMapUpdated(this.markers);
 
   @override
@@ -346,19 +362,19 @@ class DriverMapCubit extends Cubit<DriverMapState> {
       final Uint8List markerIconPickUp =
           await getBytesFromAsset(pickupImage, 15);
 
-      Set<Marker> markers = {};
-      markers.add(Marker(
-        markerId: const MarkerId('pickup'),
+      Set<AppMarker> markers = {};
+      markers.add(AppMarker(
+        markerId: 'pickup',
         position: LatLng(sourcelat, sourcelng),
-        icon: BitmapDescriptor.bytes(markerIconPickUp),
-        infoWindow: const InfoWindow(title: 'Pickup Location'),
+        title: 'Pickup Location',
+        icon: markerIconPickUp,
       ));
 
-      markers.add(Marker(
-        markerId: const MarkerId('dropoff'),
+      markers.add(AppMarker(
+        markerId: 'dropoff',
         position: LatLng(destinationlat, destinationlng),
-        icon: BitmapDescriptor.bytes(markerIconDropOff),
-        infoWindow: const InfoWindow(title: 'Dropoff Location'),
+        title: 'Dropoff Location',
+        icon: markerIconDropOff,
       ));
 
       emit(DriverMapUpdated(markers));
@@ -391,7 +407,7 @@ abstract class GetPolylineState extends Equatable {
 class GetPolylineInitial extends GetPolylineState {}
 
 class GetPolylineLoading extends GetPolylineState {
-  final Set<Polyline> polylines;
+  final Map<String, List<LatLng>> polylines;
   GetPolylineLoading(this.polylines);
 
   @override
@@ -399,7 +415,7 @@ class GetPolylineLoading extends GetPolylineState {
 }
 
 class GetPolylineUpdated extends GetPolylineState {
-  final Set<Polyline>? polylines;
+  final Map<String, List<LatLng>>? polylines;
   GetPolylineUpdated({this.polylines});
 
   @override
@@ -417,8 +433,7 @@ class GetPolylineUpdatedError extends GetPolylineState {
 class GetPolylineCubit extends Cubit<GetPolylineState> {
   GetPolylineCubit() : super(GetPolylineInitial());
 
-  final Map<PolylineId, Polyline> _polylines = {};
-  final PolylinePoints _polylinePoints = PolylinePoints();
+  final Map<String, List<LatLng>> _polylines = {};
 
   Future<void> getPolyline({
     required double sourcelat,
@@ -436,66 +451,39 @@ class GetPolylineCubit extends Cubit<GetPolylineState> {
         return;
       }
 
-      emit(GetPolylineLoading(_polylines.values.toSet()));
+      emit(GetPolylineLoading(Map.from(_polylines)));
 
-      final result = await _polylinePoints.getRouteBetweenCoordinates(
-        googleApiKey: Config.googleKey,
-        request: PolylineRequest(
-          origin: PointLatLng(sourcelat, sourcelng),
-          destination: PointLatLng(destinationlat, destinationlng),
-          mode: TravelMode.driving,
-        ),
-      );
+      final url = Uri.parse(
+          '$osrmBaseUrl/route/v1/driving/$sourcelng,$sourcelat;$destinationlng,$destinationlat?overview=full&geometries=geojson');
 
-      if (result.status == 'OK') {
-        final polylineCoordinates = result.points
-            .map((point) => LatLng(point.latitude, point.longitude))
+      final response = await http.get(url);
+      final data = jsonDecode(response.body);
+
+      if (data['code'] == 'Ok') {
+        final coordinates = data['routes'][0]['geometry']['coordinates'] as List;
+        final polylineCoordinates = coordinates
+            .map<LatLng>((point) => LatLng(point[1] as double, point[0] as double))
             .toList();
 
-        final PolylineId polylineId = isPickupRoute
-            ? const PolylineId("DriverPickupToUser")
-            : const PolylineId("DriverDropoffToUser");
+        final String polylineId =
+            isPickupRoute ? "DriverPickupToUser" : "DriverDropoffToUser";
+        final String oppositePolylineId =
+            isPickupRoute ? "DriverDropoffToUser" : "DriverPickupToUser";
 
-        // Remove the polyline of the opposite route type
-        final PolylineId oppositePolylineId = isPickupRoute
-            ? const PolylineId("DriverDropoffToUser")
-            : const PolylineId("DriverPickupToUser");
         _polylines.remove(oppositePolylineId);
+        _polylines[polylineId] = polylineCoordinates;
 
-        // Remove the current polyline (if any) for the same route type
-        _polylines.remove(polylineId);
-
-        _addPolyLine(
-          coordinates: polylineCoordinates,
-          id: polylineId,
-          color: isPickupRoute ? Colors.blue : Colors.green,
-        );
-
-        emit(GetPolylineUpdated(polylines: _polylines.values.toSet()));
+        emit(GetPolylineUpdated(polylines: Map.from(_polylines)));
       } else {
         emit(GetPolylineUpdatedError(
-            result.errorMessage ?? "Failed to get polyline"));
+            data['message']?.toString() ?? "Failed to get polyline"));
       }
     } catch (e) {
       emit(GetPolylineUpdatedError("Exception: $e"));
     }
   }
 
-  void _addPolyLine({
-    required List<LatLng> coordinates,
-    required PolylineId id,
-    required Color color,
-  }) {
-    final polyline = Polyline(
-      polylineId: id,
-      color: color,
-      width: 5,
-      points: coordinates,
-    );
-    _polylines[id] = polyline;
-  }
-
-  Set<Polyline> get currentPolylines => _polylines.values.toSet();
+  Map<String, List<LatLng>> get currentPolylines => Map.from(_polylines);
 
   void resetPolylines() {
     _polylines.clear();
