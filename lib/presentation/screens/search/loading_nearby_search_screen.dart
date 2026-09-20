@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:zearah_rider/core/utils/translate.dart';
 import 'package:zearah_rider/presentation/screens/search/selection_vehicle_screen.dart';
 import '../../../app/route_settings.dart';
@@ -21,7 +21,7 @@ class LoadingNearbySearchScreen extends StatefulWidget {
 
 class _LoadingNearbySearchScreenState extends State<LoadingNearbySearchScreen> {
 
-  Set<Polyline> _polylines = {};
+  Map<String, List<LatLng>> _polylines = {};
   String? _errorMessage;
 
 
