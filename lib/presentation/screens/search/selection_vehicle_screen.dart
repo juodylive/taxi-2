@@ -5,7 +5,9 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
+import '../../cubits/location/set_marker_cubit.dart' show AppMarker;
 import 'package:zearah_rider/core/utils/translate.dart';
 import 'package:zearah_rider/presentation/screens/search/send_ride_request_screen.dart';
 import '../../../core/services/data_store.dart';
@@ -18,7 +20,7 @@ import '../../cubits/realtime/ride_request_cubit.dart';
 import '../../cubits/vehicle_data/get_vehicle_cetgegory_cubit.dart';
 
 class SelectionVehicleScreen extends StatefulWidget {
-  final Set<Polyline> polylines;
+  final Map<String, List<LatLng>> polylines;
   final List<Map<String, dynamic>> fareList;
 
   const SelectionVehicleScreen({
@@ -34,7 +36,7 @@ class SelectionVehicleScreen extends StatefulWidget {
 class _SelectionVehicleScreenState extends State<SelectionVehicleScreen> {
   String selectedLat = "28.5868";
   String selectedLong = "77.3152";
-  GoogleMapController? mapController;
+  final AppMapController mapController = AppMapController();
   bool isLoadingOnMap = false;
   int selectedIdIndex = -1;
   double traveCharge = 0.0;
@@ -43,8 +45,7 @@ class _SelectionVehicleScreenState extends State<SelectionVehicleScreen> {
 
   Map<String,dynamic> selectedVehicleData={};
 
-  Set<Polyline> _polylines = {};
-  final Completer<GoogleMapController> _controller = Completer();
+  Map<String, List<LatLng>> _polylines = {};
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   bool isRequestInProgress = false;
 
@@ -66,19 +67,19 @@ class _SelectionVehicleScreenState extends State<SelectionVehicleScreen> {
     await getBytesFromAsset("assets/images/pickupmarker.png", 15);
     // ignore: use_build_context_synchronously
     final bookRideState = context.read<BookRideRealTimeDataBaseCubit>().state;
-    markers.add(Marker(
-      markerId: const MarkerId('pickup'),
+    markers.add(AppMarker(
+      markerId: 'pickup',
       position: LatLng(double.parse(bookRideState.pickupAddressLatitude), double.parse(bookRideState.pickupAddressLongitude)),
-      icon: BitmapDescriptor.bytes(markerIconPickUp),
-      infoWindow: const InfoWindow(title: 'Pickup Location'),
+      title: 'Pickup Location',
+      icon: markerIconPickUp,
     ));
 
 
-    markers.add(Marker(
-      markerId: const MarkerId('dropoff'),
+    markers.add(AppMarker(
+      markerId: 'dropoff',
       position: LatLng(double.parse(bookRideState.dropoffAddressLatitude), double.parse(bookRideState.dropoffAddressLongitude)),
-      icon: BitmapDescriptor.bytes(markerIconDropOff),
-      infoWindow: const InfoWindow(title: 'Dropoff Location'),
+      title: 'Dropoff Location',
+      icon: markerIconDropOff,
     ));
     moveMapAccordingPoline();
 
@@ -88,58 +89,34 @@ class _SelectionVehicleScreenState extends State<SelectionVehicleScreen> {
     });
   }
 
-  void moveMapAccordingPoline()async{
-    final controller = await _controller.future;
+  void moveMapAccordingPoline() {
+    final polylinePoints = _polylines.values.expand((points) => points).toList();
 
-    final polylinePoints = _polylines.expand((polyline) => polyline.points).toList();
-
-    // ignore: use_build_context_synchronously
-    final markerPositions = context.read<DriverMapCubit>().state is DriverMapUpdated
-        // ignore: use_build_context_synchronously
-        ? (context.read<DriverMapCubit>().state as DriverMapUpdated).markers.map((m) => m.position).toList()
-        : [];
+    final markerPositions = markers.map((m) => m.position).toList();
 
     final List<LatLng> allPoints = [...polylinePoints, ...markerPositions];
 
     if (allPoints.isNotEmpty) {
-    
-      LatLngBounds bounds = _createBounds(allPoints);
- 
-      controller.animateCamera(CameraUpdate.newLatLngBounds(bounds, 100));
+      try {
+        mapController.fitBounds(allPoints);
+      } catch (_) {}
     }
   }
-  LatLngBounds _createBounds(List<LatLng> points) {
-    double? x0, x1, y0, y1;
-    for (LatLng latLng in points) {
-      if (x0 == null) {
-        x0 = x1 = latLng.latitude;
-        y0 = y1 = latLng.longitude;
-      } else {
-        if (latLng.latitude < x0) x0 = latLng.latitude;
-        if (latLng.latitude > x1!) x1 = latLng.latitude;
-        if (latLng.longitude < y0!) y0 = latLng.longitude;
-        if (latLng.longitude > y1!) y1 = latLng.longitude;
-      }
-    }
-    return LatLngBounds(
-      southwest: LatLng(x0!, y0!),
-      northeast: LatLng(x1!, y1!),
-    );
-  }
+
   void zoomIn() {
-    mapController?.animateCamera(CameraUpdate.zoomIn());
+    mapController.zoomIn();
   }
 
   void zoomOut() {
-    mapController?.animateCamera(CameraUpdate.zoomOut());
+    mapController.zoomOut();
   }
 
   @override
   void dispose() {
-    mapController?.dispose();
+    mapController.dispose();
     super.dispose();
   }
-  Set<Marker> markers={};
+  Set<AppMarker> markers={};
 
   @override
   Widget build(BuildContext context) {
@@ -154,10 +131,11 @@ class _SelectionVehicleScreenState extends State<SelectionVehicleScreen> {
               height: MediaQuery.of(context).size.height / 1.6,
               child: Stack(
                 children: [
-                  GoogleMap(
-                    key: const ValueKey('google_map'),
-                    initialCameraPosition: CameraPosition(
-                      target: LatLng(
+                  FlutterMap(
+                    key: const ValueKey('flutter_map'),
+                    mapController: mapController.raw,
+                    options: MapOptions(
+                      initialCenter: LatLng(
                         double.parse(context
                             .read<BookRideRealTimeDataBaseCubit>()
                             .state
@@ -167,16 +145,38 @@ class _SelectionVehicleScreenState extends State<SelectionVehicleScreen> {
                             .state
                             .pickupAddressLongitude),
                       ),
-                      zoom: 12,
+                      initialZoom: 12,
+                      onMapReady: () {
+                        moveMapAccordingPoline();
+                      },
                     ),
-                    markers: markers,
-                    polylines: _polylines,
-                    onMapCreated: (GoogleMapController controller) {
-                      mapController = controller;
-                      if (!_controller.isCompleted) {
-                        _controller.complete(controller);
-                      }
-                    },
+                    children: [
+                      TileLayer(
+                        urlTemplate:
+                            "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=7fd22148-c7d7-4f1f-b33f-677c8dbc8496",
+                        userAgentPackageName: 'com.zearah.rider',
+                      ),
+                      if (_polylines.values.isNotEmpty)
+                        PolylineLayer(
+                          polylines: _polylines.values
+                              .map((points) => Polyline(
+                                    points: points,
+                                    strokeWidth: 4,
+                                    color: Colors.blue,
+                                  ))
+                              .toList(),
+                        ),
+                      MarkerLayer(
+                        markers: markers
+                            .map((m) => Marker(
+                                  point: m.position,
+                                  width: 48,
+                                  height: 48,
+                                  child: Image.memory(m.icon),
+                                ))
+                            .toList(),
+                      ),
+                    ],
                   ),
                   Positioned(
                     top: 60,
