@@ -250,7 +250,7 @@ class DriverNearByCubit extends Cubit<DriverNearByState> {
                   final distanceMeters = distances[i][0];
                   if (distanceMeters != null) {
                     final distanceKm = (distanceMeters as num) / 1000;
-                    if (distanceKm <= distance) {
+                    if (distanceKm <= (distance ?? 15.0)) {
                       filtered.add(chunk[i]);
                     }
                   }
