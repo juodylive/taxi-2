@@ -8,8 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:zearah_rider/presentation/cubits/location/user_current_location_cubit.dart';
 
-import '../../../core/services/config.dart';
 import '../../../data/repositories/vehicle_repository.dart';
+
+const String osrmBaseUrlPrice = 'http://158.101.231.22:5000';
 
 abstract class GetItemPriceState extends Equatable {
   @override
@@ -205,55 +206,33 @@ class GetDistanceRouteCubit extends Cubit<GetDistanceRouteState> {
     required String dropOffLng,
     required String mode,
   }) async {
-    final String url = 'https://maps.googleapis.com/maps/api/directions/json?'
-        'origin=$pickupLat,$pickupLng'
-        '&destination=$dropOffLat,$dropOffLng'
-        '&mode=$mode'
-        '&alternatives=true'
-        '&departure_time=now'
-        '&traffic_model=best_guess'
-        '&key=${Config.googleKey}';
+    // OSRM currently only serves the "driving" profile on our server, so
+    // every vehicle mode is routed the same way for now.
+    final String url =
+        '$osrmBaseUrlPrice/route/v1/driving/$pickupLng,$pickupLat;$dropOffLng,$dropOffLat'
+        '?overview=false';
 
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
 
-      if (data['status'] != 'OK') return {};
+      if (data['code'] != 'Ok') return {};
 
       final routes = data['routes'];
       if (routes != null && routes.isNotEmpty) {
-        double? shortestDistance;
-        Map<String, dynamic>? bestRoute;
+        final route = routes[0];
+        final double distanceMeters = (route['distance'] as num).toDouble();
+        final double durationSeconds = (route['duration'] as num).toDouble();
 
-        for (var route in routes) {
-          final legs = route['legs'];
-          if (legs != null && legs.isNotEmpty) {
-            
-            final durationTrafficValue = legs[0]['duration_in_traffic']
-                    ?['value'] ??
-                legs[0]['duration']['value'];  
+        final distanceInKm = distanceMeters / 1000;
+        final durationMinutes = (durationSeconds / 60).ceil();
+        final durationText = "$durationMinutes min";
 
-                  
-            if (shortestDistance == null ||
-                durationTrafficValue < shortestDistance) {
-              shortestDistance = durationTrafficValue.toDouble();
-              bestRoute = legs[0];
-            }
-          }
-        }
-
-        if (bestRoute != null) {
-          final distanceValue = bestRoute['distance']['value'];
-          final durationText = bestRoute['duration_in_traffic']?['text'] ??
-              bestRoute['duration']['text'];
-          final distanceInKm = distanceValue / 1000;
-
-          return {
-            "distance": distanceInKm,
-            "duration": durationText,
-          };
-        }
+        return {
+          "distance": distanceInKm,
+          "duration": durationText,
+        };
       }
     }
 
