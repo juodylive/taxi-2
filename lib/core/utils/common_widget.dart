@@ -18,7 +18,8 @@ import 'package:shimmer/shimmer.dart';
 import 'package:zearah_rider/core/utils/theme/project_color.dart';
 import 'package:zearah_rider/core/utils/theme/theme_style.dart';
 import 'package:zearah_rider/core/utils/translate.dart';
-
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import '../../presentation/cubits/localizations_cubit.dart';
 import '../../presentation/cubits/profile/delete_account_cubit.dart';
 import '../../presentation/screens/auth/login_screen.dart';
@@ -28,7 +29,35 @@ Widget commonlyUserLogo() {
     'assets/images/appIcon.png',height: 100,
   );
 }
+class AppMapController {
+  final MapController _controller = MapController();
 
+  MapController get raw => _controller;
+
+  void dispose() {
+    _controller.dispose();
+  }
+
+  void zoomIn() {
+    _controller.move(_controller.camera.center, _controller.camera.zoom + 1);
+  }
+
+  void zoomOut() {
+    _controller.move(_controller.camera.center, _controller.camera.zoom - 1);
+  }
+
+  void moveTo(LatLng position, {double? zoom}) {
+    _controller.move(position, zoom ?? _controller.camera.zoom);
+  }
+
+  void fitBounds(List<LatLng> points) {
+    if (points.isEmpty) return;
+    final bounds = LatLngBounds.fromPoints(points);
+    _controller.fitCamera(
+      CameraFit.bounds(bounds: bounds, padding: const EdgeInsets.all(60)),
+    );
+  }
+}
 class CustomsButtons extends StatelessWidget {
   final String text;
   final Color? textColor;
