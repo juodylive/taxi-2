@@ -16,22 +16,9 @@ import 'package:http/http.dart' as http;
 
 import '../../../core/extensions/workspace.dart';
 import '../general_cubit.dart';
+import 'set_marker_cubit.dart' show AppMarker;
 
 const String osrmBaseUrl = 'http://158.101.231.22:5000';
-
-class AppMarker {
-  final String markerId;
-  final LatLng position;
-  final String title;
-  final Uint8List icon;
-
-  AppMarker({
-    required this.markerId,
-    required this.position,
-    required this.title,
-    required this.icon,
-  });
-}
 
 abstract class DriverNearByState extends Equatable {
   @override
