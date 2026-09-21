@@ -19,7 +19,7 @@ import 'package:zearah_rider/core/utils/theme/project_color.dart';
 import 'package:zearah_rider/core/utils/theme/theme_style.dart';
 import 'package:zearah_rider/core/utils/translate.dart';
 import 'package:flutter_map/flutter_map.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' hide Path;
 import '../../presentation/cubits/localizations_cubit.dart';
 import '../../presentation/cubits/profile/delete_account_cubit.dart';
 import '../../presentation/screens/auth/login_screen.dart';
