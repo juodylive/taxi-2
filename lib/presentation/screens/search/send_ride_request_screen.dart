@@ -10,7 +10,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_map/flutter_map.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:intl/intl.dart';
 // ignore: depend_on_referenced_packages
 import 'package:http/http.dart' as http;
@@ -66,8 +67,8 @@ class _SendRideRequestScreenState extends State<SendRideRequestScreen> {
   String rideStatus = "";
   String paymentUrl = '';
 
-  Set<Polyline> polylines = {};
-  Set<Marker> markers = {};
+  Map<String, List<LatLng>> polylines = {};
+  Set<AppMarker> markers = {};
   bool isSuccessFirst = false;
   bool isCurrentScreenActive = true;
   List<LatLng> polylineCoordinates = [];
@@ -707,14 +708,14 @@ class _SendRideRequestScreenState extends State<SendRideRequestScreen> {
     startAutoDistanceTimerForDropOff();
   }
 
-  GoogleMapController? mapController;
-  Completer<GoogleMapController> completeController = Completer();
+  AppMapController? mapController;
+  Completer<AppMapController> completeController = Completer();
   void zoomIn() {
-    mapController?.animateCamera(CameraUpdate.zoomIn());
+    mapController?.zoomIn();
   }
 
   void zoomOut() {
-    mapController?.animateCamera(CameraUpdate.zoomOut());
+    mapController?.zoomOut();
   }
 
   ///fro live tracking
@@ -769,6 +770,7 @@ class _SendRideRequestScreenState extends State<SendRideRequestScreen> {
     locationUpdateTimer = null;
     fetchTimer = null;
     isCurrentScreenActive = true;
+    mapController?.dispose();
     super.dispose();
   }
 
@@ -1840,10 +1842,10 @@ class _PulsingCircleState extends State<PulsingCircle>
 
 class PersistentGoogleMap extends StatefulWidget {
   final LatLng initialPosition;
-  final Set<Marker> markers;
-  final Set<Polyline> polylines;
+  final Set<AppMarker> markers;
+  final Map<String, List<LatLng>> polylines;
   final bool myLocationEnabled;
-  final Function(GoogleMapController) onMapCreated;
+  final Function(AppMapController) onMapCreated;
 
   const PersistentGoogleMap({
     super.key,
@@ -1859,15 +1861,18 @@ class PersistentGoogleMap extends StatefulWidget {
 }
 
 class PersistentGoogleMapState extends State<PersistentGoogleMap> {
-  GoogleMapController? _mapController;
-  Set<Marker> markers = {};
-  Set<Polyline> polyline = {};
+  final AppMapController _mapController = AppMapController();
+  Set<AppMarker> markers = {};
+  Map<String, List<LatLng>> polyline = {};
 
   @override
   void initState() {
     super.initState();
     markers = widget.markers;
     polyline = widget.polylines;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      widget.onMapCreated(_mapController);
+    });
   }
 
   @override
@@ -1889,20 +1894,39 @@ class PersistentGoogleMapState extends State<PersistentGoogleMap> {
           if (markerState is UserMarkerUpdated) {
             markers = markerState.markers;
           }
-          return GoogleMap(
-            initialCameraPosition: CameraPosition(
-              target: widget.initialPosition,
-              zoom: 15,
+          return FlutterMap(
+            mapController: _mapController.raw,
+            options: MapOptions(
+              initialCenter: widget.initialPosition,
+              initialZoom: 15,
             ),
-            myLocationEnabled: widget.myLocationEnabled,
-            markers: markers,
-            polylines: polyline,
-            onMapCreated: (controller) {
-              if (_mapController == null) {
-                _mapController = controller;
-                widget.onMapCreated(controller);
-              }
-            },
+            children: [
+              TileLayer(
+                urlTemplate:
+                    "https://tiles.stadiamaps.com/tiles/alidade_smooth/{z}/{x}/{y}{r}.png?api_key=7fd22148-c7d7-4f1f-b33f-677c8dbc8496",
+                userAgentPackageName: 'com.zearah.rider',
+              ),
+              if (polyline.values.isNotEmpty)
+                PolylineLayer(
+                  polylines: polyline.values
+                      .map((points) => Polyline(
+                            points: points,
+                            strokeWidth: 4,
+                            color: Colors.blue,
+                          ))
+                      .toList(),
+                ),
+              MarkerLayer(
+                markers: markers
+                    .map((m) => Marker(
+                          point: m.position,
+                          width: 48,
+                          height: 48,
+                          child: Image.memory(m.icon),
+                        ))
+                    .toList(),
+              ),
+            ],
           );
         });
       },
@@ -1910,35 +1934,21 @@ class PersistentGoogleMapState extends State<PersistentGoogleMap> {
   }
 
   void _moveCameraToFitPolylineAndMarkers() {
-    if (_mapController == null || polyline.isEmpty) return;
-
-    LatLngBounds bounds;
-    final points = polyline.expand((p) => p.points).toList();
+    final points = [
+      ...polyline.values.expand((p) => p),
+      ...markers.map((m) => m.position),
+    ];
 
     if (points.isEmpty) return;
 
-    final southwestLat =
-        points.map((p) => p.latitude).reduce((a, b) => a < b ? a : b);
-    final southwestLng =
-        points.map((p) => p.longitude).reduce((a, b) => a < b ? a : b);
-    final northeastLat =
-        points.map((p) => p.latitude).reduce((a, b) => a > b ? a : b);
-    final northeastLng =
-        points.map((p) => p.longitude).reduce((a, b) => a > b ? a : b);
-
-    bounds = LatLngBounds(
-      southwest: LatLng(southwestLat, southwestLng),
-      northeast: LatLng(northeastLat, northeastLng),
-    );
-
-    _mapController!.animateCamera(
-      CameraUpdate.newLatLngBounds(bounds, 150), // 150 = padding
-    );
+    try {
+      _mapController.fitBounds(points);
+    } catch (_) {}
   }
 
   @override
   void dispose() {
-    _mapController?.dispose();
+    _mapController.dispose();
     super.dispose();
   }
 }
