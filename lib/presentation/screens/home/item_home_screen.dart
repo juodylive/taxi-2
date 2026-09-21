@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:latlong2/latlong.dart';
+import 'package:latlong2/latlong.dart' hide Path;
 import 'package:zearah_rider/core/utils/theme/project_color.dart';
 import 'package:zearah_rider/core/utils/translate.dart';
 import 'package:zearah_rider/core/extensions/helper/push_notifications.dart';
