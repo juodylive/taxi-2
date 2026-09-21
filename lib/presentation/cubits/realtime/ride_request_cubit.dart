@@ -668,7 +668,7 @@ class RideRequestCubit extends Cubit<RideRequestState> {
           'userName': userName,
           'userPhone': userPhoneNumber,
           'userPhoto': userImageUrl ?? "defaultImageUrl",
-          'userRating': loginModel?.data?.userRating ?? "",
+          'userRating': (loginModel?.data?.userRating ?? "").toString(),
           'userPhoneCountry': loginModel?.data?.phoneCountry ?? "",
         },
         'driverLocation': {'lat': "", 'lng': ""},
